@@ -11,8 +11,9 @@ class Net_DB_Server(object):
 		self.filename=directory+'/TD2'
 		self.readDatabaseFile(self.filename)
 		self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.serversocket.bind(('localhost', 8089))
+		self.serversocket.bind((socket.gethostname(), 8089))
 		self.serversocket.listen(5) # become a server socket, maximum 5 connections
+		print socket.gethostname()
 		pass
 
 	def readDatabaseFile(self, databaseFilePath):
