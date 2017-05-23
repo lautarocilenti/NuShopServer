@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import socket
 import os
 import sys       
@@ -11,7 +12,7 @@ class Net_DB_Server(object):
 		self.filename=directory+'/TD2'
 		self.readDatabaseFile(self.filename)
 		self.serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		self.serversocket.bind((socket.gethostname(), 8089))
+		self.serversocket.bind(("192.168.1.150", 12345))
 		self.serversocket.listen(5) # become a server socket, maximum 5 connections
 		print socket.gethostname()
 		pass
@@ -62,14 +63,8 @@ class Net_DB_Server(object):
 						if ID in self.database:
 							print 'Sending requested user data ID =' + ID
 							UserProfile=self.database[ID]
-							c.send(ID)
-							c.send(',')
-							c.send(UserProfile['Mill_TL'])
-							c.send(',')
-							c.send(UserProfile['Lathe_TL'])
-							c.send(',')
-							c.send(UserProfile['FPS_Template'])
-
+							message = ID + ',' + UserProfile['Mill_TL'] + ',' + UserProfile['Lathe_TL'] + ','+ UserProfile['FPS_Template']
+							c.send(message)
 
 						else:
 							print "ID not found"
